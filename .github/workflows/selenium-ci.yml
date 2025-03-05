@@ -8,7 +8,7 @@ on:
     branches:
       - main
       - develop
-      - UserRegistrationAndLogin
+      - UserRegistrationAndLogin #testing with this branch ..,
 
 jobs:
   test:
