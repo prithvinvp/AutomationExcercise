@@ -1,0 +1,43 @@
+name: Selenium Test Automation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - develop
+      - UserRegistrationAndLogin
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Change to 'windows-latest' if needed
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Latest Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'  # You can change to 'zulu' or 'corretto' if needed
+          java-version: 'latest'   # Always fetches the latest stable Java version
+          cache: 'maven'
+
+      - name: Install Chrome & ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          curl -sS -o chromedriver.zip "https://chromedriver.storage.googleapis.com/$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip"
+          unzip chromedriver.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
+      - name: Verify Chrome & ChromeDriver Installation
+        run: |
+          google-chrome --version
+          chromedriver --version
+
+      - name: Build and Run Selenium Tests
+        run: mvn clean test
