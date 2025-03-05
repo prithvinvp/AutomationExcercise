@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+      - develop
+      - UserRegistrationAndLogin #testing with this branch ..,
+      
   pull_request:
     branches:
       - main
