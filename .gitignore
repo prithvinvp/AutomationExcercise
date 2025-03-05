@@ -1,0 +1,24 @@
+# Ignore target folder (compiled classes, JARs, etc.)
+target/
+
+# Ignore Eclipse IDE files
+.classpath
+.project
+*.pref
+.settings/
+
+# Ignore Maven-specific files
+mvnw
+mvnw.cmd
+
+# Ignore log files and temporary files
+*.log
+*.tmp
+
+# Ignore IntelliJ IDEA files (if used)
+.idea/
+*.iml
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
