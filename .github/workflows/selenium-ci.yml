@@ -43,4 +43,8 @@ jobs:
           chromedriver --version
 
       - name: Build and Run Selenium Tests
-        run: mvn clean test
+        run: mvn -B clean test
+
+env:
+  ACTIONS_RUNNER_DEBUG: false
+  GITHUB_ACTIONS: false
