@@ -15,15 +15,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TestRegistrationAndLoginSuite {
 	private WebDriver driver;
-	private Log log;
 	private String browser;
+	private Registration reg ;
 	
 	@BeforeSuite
 	public void setup() {
 		try {
 			WebDriverManager.chromedriver().setup();
 			browser = Core.readProperty("browserName");
-			log = new Log();
 			Log.initReport("UserRegistrationAndLogin", Core.readProperty("tester"), Core.readProperty("environment")); 
 			if(browser.equalsIgnoreCase("chrome")) {
 				driver = new ChromeDriver();
@@ -31,23 +30,40 @@ public class TestRegistrationAndLoginSuite {
 				driver = new SafariDriver();
 			}
 			driver.manage().window().maximize();
+			reg = new Registration(driver);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	@Test(priority=1)
-	public void registerUser() {
+ 	public void registerUser() {
 		try {
-			log.startTest("Register User");
-			Registration reg = new Registration(driver);
+			Log.startTest("Register User");
 			reg.gotToPage(Core.readProperty("HomePageUrl"));
-			log.assertThat(reg.getPageTitle(),"Automation Exercise");
-			log.assertThat(reg.clickOnButton(),"New User Signup!");
-			log.endTest("Register User");
+			Log.assertThat(reg.getPageTitle(),"Automation Exercise");
+			Log.assertThat(reg.clickOnSignUpLink(),"New User Signup!");
+			Log.assertThat(reg.nameAndEmailAddress(),"Enter Account Information");
+			
+			reg.fillDetailedInformation();
+			Log.assertThat(reg.validateAccountCreation(), "Account Created!");
+			Log.assertThat(reg.checkLoggedIn(), "Logged in as");
+			Log.endTest("Register User");
 		}catch(Exception e) {
-			log.fail(e.getMessage());
+			Log.fail(e.getMessage());
 			e.printStackTrace();
+		}
+	}
+	
+	@Test(priority=2)
+	public void logoutUser() {
+		try {
+			Log.startTest("Logout User");
+			Log.assertThat(reg.logoutUser(), "Automation Exercise");
+			Log.endTest("Logout User");
+		}catch(Exception e) {
+			e.printStackTrace();
+			Log.fail(e.getMessage());
 		}
 	}
 	

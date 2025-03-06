@@ -3,21 +3,20 @@ package com.Utils.actions;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 
 import com.Utils.reports.Log;
 
 public class UIActions {
 	
 	private WebDriver driver;
-	private static final Logger logger = LogManager.getLogger(Log.class);
 	public UIActions(WebDriver _driver) {
 		this.driver = _driver;
 	}
@@ -58,10 +57,10 @@ public class UIActions {
 	 * @param Seconds
 	 * @param message
 	 */
-	public void clickElement(By locator, int seconds, String message) {
+	public void clickElement(By locator, String message, int seconds) {
         try {
             WebElement element = waitForElement(locator, seconds);
-            logger.info("Clicked on element: " + message);
+            Log.message("Clicked on element: " + message);
             element.click();
         } catch (Exception e) {
         	e.printStackTrace();
@@ -69,17 +68,66 @@ public class UIActions {
         }
     }
 	
+	public void hardClick(By locator, String message, int seconds) {
+		try {
+			WebElement element = waitForElement(locator, seconds);
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("arguments[0].click();",element);
+			Log.message("Clicked on element: " + message);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 	/**
 	 * method to get the text from the tag
 	 * @param locator
 	 * @param seconds
 	 * @param message
 	 */
-	public String getText(By locator, int seconds, String message) {
+	public String getText(By locator, String message, int seconds) {
 		try {
 			WebElement element = waitForElement(locator, seconds);
-			logger.info("Retrieved text for the element: " + message);
+			Log.message("Retrieved text for the element: " + message);
 			return element.getText();
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * method to send the text
+	 * @param locator
+	 * @param inputText
+	 * @param message
+	 * @param seconds
+	 */
+	public void sendText(By locator, String inputText, String message, int seconds) {
+		try {
+			WebElement element = waitForElement(locator, seconds);
+			element.sendKeys(inputText);
+			Log.message("Entered the text: "+ message);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * method to select the dropdown by its value
+	 * @param locator
+	 * @param input
+	 * @param message
+	 * @param seconds
+	 */
+	public void selectByValue(By locator, String input, String message, int seconds) {
+		try {
+			WebElement element = waitForElement(locator, seconds);
+			Select dropdown = new Select(element);
+			dropdown.selectByVisibleText(input);
+			Log.message("Selected the value: " + message);
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw e;

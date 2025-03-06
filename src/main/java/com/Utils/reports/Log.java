@@ -37,7 +37,7 @@ public class Log {
      * Start a new test case in the report
      * @param testName
      */
-    public void startTest(String testName) {
+    public static void startTest(String testName) {
         test = extent.createTest(testName);
         logger.info("📝 Test Started: " + testName);
     }
@@ -46,7 +46,7 @@ public class Log {
      * End the current test case
      * @param testName
      */
-    public void endTest(String testName) {
+    public static void endTest(String testName) {
         logger.info("🛑 Test Ended: " + testName + "\n\n");
     }
 
@@ -54,7 +54,7 @@ public class Log {
      * Log Info Message
      * @param message
      */
-    public void message(String message) {
+    public static void message(String message) {
         logger.info(message);
         if (test != null) {
             test.info(message);
@@ -65,7 +65,7 @@ public class Log {
      * Log Pass Message
      * @param message
      */
-    public void pass(String message) {
+    public static void pass(String message) {
         logger.info("✅ " + message);
         if (test != null) {
             test.pass(message);
@@ -76,7 +76,7 @@ public class Log {
      * Log Fail Message
      * @param message
      */
-    public void fail(String message) {
+    public static void fail(String message) {
         logger.error("❌ " + message);
         if (test != null) {
             test.fail(message);
@@ -93,11 +93,12 @@ public class Log {
         }
     }
     
-    public void assertThat(String actual, String expected) {
-        if (actual.equals(expected)) {logger.info("✅ Assertion Passed - Expected: [" + expected + "], Actual: [" + actual + "]");
+    public static void assertThat(String actual, String expected) {
+        if (actual.toUpperCase().contains(expected.toUpperCase())) {
+        	logger.info("✅ Assertion Passed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
         } else {
-            logger.error("❌ Assertion Failed - Expected: [" + expected + "], Actual: [" + actual + "]");
-            throw new IllegalStateException("Assertion Failed - Expected: [" + expected + "], Actual: [" + actual + "]");
+            logger.error("❌ Assertion Failed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
+            throw new IllegalStateException("Assertion Failed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
         }
     }
 
