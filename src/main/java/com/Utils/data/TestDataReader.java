@@ -1,4 +1,4 @@
-package com.Utils;
+package com.Utils.data;
 
 public class TestDataReader {
 	

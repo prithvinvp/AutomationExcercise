@@ -1,10 +1,12 @@
-package com.Utils;
+package com.Utils.reports;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.Utils.configs.Core;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import java.io.File;
+import java.io.IOException;
 
 public class Log {
     private static final Logger logger = LogManager.getLogger(Log.class);
@@ -15,27 +17,12 @@ public class Log {
     /**
      * Initialize Extent Report with a fixed report name (overwrite mode)
      * @param reportName
+     * @throws IOException 
      */
-    public static void initReport(String reportName, String testerName, String environment) {
+    public static void initReport(String reportName, String testerName, String environment) throws IOException {
         String reportsDir = System.getProperty("user.dir") + "/src/main/resources/Reports/";
-        File dir = new File(reportsDir);
-        if (!dir.exists()) {
-            dir.mkdirs(); // Create Reports folder if it doesn't exist
-        }
-
-        // Fixed report name
         reportPath = reportsDir + reportName + ".html";
-
-        // ✅ Force delete existing report (if it exists)
-        File reportFile = new File(reportPath);
-        if (reportFile.exists()) {
-            if (reportFile.delete()) {
-                logger.info("🗑 Old report deleted: " + reportPath);
-            } else {
-                logger.error("⚠ Failed to delete old report. Check file permissions.");
-            }
-        }
-
+        Core.createFile(reportsDir, reportPath);
         // Now create a new fresh report
         ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
         extent = new ExtentReports();
@@ -43,7 +30,7 @@ public class Log {
         extent.setSystemInfo("Tester", testerName);
         extent.setSystemInfo("Environment", environment);
 
-        logger.info("✅ Extent Report Initialized: " + reportPath);
+        logger.info("📊📉 Extent Report Initialized: " + reportPath);
     }
 
     /**
@@ -67,7 +54,7 @@ public class Log {
      * Log Info Message
      * @param message
      */
-    public void testCaseInfo(String message) {
+    public void message(String message) {
         logger.info(message);
         if (test != null) {
             test.info(message);
@@ -105,6 +92,15 @@ public class Log {
             logger.info("📄 Extent Report Generated: " + reportPath);
         }
     }
+    
+    public void assertThat(String actual, String expected) {
+        if (actual.equals(expected)) {logger.info("✅ Assertion Passed - Expected: [" + expected + "], Actual: [" + actual + "]");
+        } else {
+            logger.error("❌ Assertion Failed - Expected: [" + expected + "], Actual: [" + actual + "]");
+            throw new IllegalStateException("Assertion Failed - Expected: [" + expected + "], Actual: [" + actual + "]");
+        }
+    }
+
 }
 
 
