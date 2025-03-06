@@ -107,6 +107,7 @@ public class UIActions {
 	public void sendText(By locator, String inputText, String message, int seconds) {
 		try {
 			WebElement element = waitForElement(locator, seconds);
+			element.clear();
 			element.sendKeys(inputText);
 			Log.message("Entered the text: "+ message);
 		}catch(Exception e) {

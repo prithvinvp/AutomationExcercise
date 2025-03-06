@@ -31,6 +31,7 @@ public class TestRegistrationAndLoginSuite {
 			}
 			driver.manage().window().maximize();
 			reg = new Registration(driver);
+			reg.gotToPage(Core.readProperty("HomePageUrl"));
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -40,7 +41,6 @@ public class TestRegistrationAndLoginSuite {
  	public void registerUser() {
 		try {
 			Log.startTest("Register User");
-			reg.gotToPage(Core.readProperty("HomePageUrl"));
 			Log.assertThat(reg.getPageTitle(),"Automation Exercise");
 			Log.assertThat(reg.clickOnSignUpLink(),"New User Signup!");
 			Log.assertThat(reg.nameAndEmailAddress(),"Enter Account Information");
@@ -59,11 +59,61 @@ public class TestRegistrationAndLoginSuite {
 	public void logoutUser() {
 		try {
 			Log.startTest("Logout User");
-			Log.assertThat(reg.logoutUser(), "Automation Exercise");
+			Log.assertThat(reg.logoutUser("logout"), "Automation Exercise");
 			Log.endTest("Logout User");
 		}catch(Exception e) {
 			e.printStackTrace();
 			Log.fail(e.getMessage());
+		}
+	}
+	
+	@Test(priority=3)
+	public void registerUserwithExistingEmail() {
+		try {
+			Log.startTest("Register User with Existing Email");
+			Log.assertThat(reg.clickOnSignUpLink(),"New User Signup!");
+			Log.assertThat(reg.registerWithExisitngEmail("test@tes.com"), "Email Address already exist!");
+			Log.endTest("Register user with Exisiting Email");
+		}catch(Exception e) {
+			e.printStackTrace();
+			Log.fail(e.getMessage());
+		}
+	}
+	
+	@Test(priority=4)
+	public void loginWithIncorrectUserAndPassword() {
+		try {
+			Log.startTest("Login with Incorrect User and Password");
+			reg.clickOnLogin("1510585@gm194.com", "dsnfkaskfjhahf");
+			Log.assertThat(reg.checkIncorrectLogin(), "Your email or password is incorrect!");
+			Log.endTest("Login with Incorrect User and Password");
+		}catch(Exception e) {
+			e.printStackTrace();
+			Log.fail(e.getMessage());
+		}
+	}
+	
+	@Test(priority=5)
+	public void loginWithCorrectUserNameAndPassword() {
+		try {
+			Log.startTest("Login with Correct Username and Password");
+			reg.clickOnLogin();
+			Log.assertThat(reg.checkLoggedIn(), "Logged in as");
+			Log.endTest("Login with Correct Username and Password");
+		}catch(Exception e) {
+			e.printStackTrace();
+			Log.fail(e.getMessage());
+		}
+	}
+	
+	@Test(priority=6)
+	public void deleteUser() {
+		try {
+			Log.startTest("Delete the User");
+			Log.assertThat(reg.checkDelete(), "Account Deleted!");
+			Log.endTest("Delete the User");
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

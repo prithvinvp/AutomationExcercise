@@ -76,8 +76,20 @@ public class Registration {
 			
 			UIActions.sendText(RegistrationPageLocators.ele_inputElement("signup-name"), name, "Name", 10);
 			UIActions.sendText(RegistrationPageLocators.ele_inputElement("signup-email"), email, "Email", 10);
-			UIActions.clickElement(RegistrationPageLocators.ele_signUpButton, "Signup Button", 10);
+			UIActions.clickElement(RegistrationPageLocators.ele_button("signup-button"), "Signup Button", 10);
 			return UIActions.getText(RegistrationPageLocators.ele_InformationHeader, "Information Form text", 10);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String registerWithExisitngEmail(String email) {
+		try {
+			UIActions.sendText(RegistrationPageLocators.ele_inputElement("signup-name"), "asdfasgaad", "Name", 10);
+			UIActions.sendText(RegistrationPageLocators.ele_inputElement("signup-email"), email, "Email", 10);
+			UIActions.clickElement(RegistrationPageLocators.ele_button("signup-button"), "Signup Button", 10);
+			return UIActions.getText(RegistrationPageLocators.ele_errorMessagecheck, "Error Message", 10);
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -122,7 +134,7 @@ public class Registration {
 	 */
 	public String validateAccountCreation() {
 		try {
-			String text = UIActions.getText(RegistrationPageLocators.ele_accountCreatedInfo, "Account Created", 10);
+			String text = UIActions.getText(RegistrationPageLocators.ele_getTextFromHtmlEement("account-created"), "Account Created", 10);
 			UIActions.clickElement(RegistrationPageLocators.ele_continue, "Continue", 10);
 			return text;
 		}catch(Exception e) {
@@ -131,6 +143,10 @@ public class Registration {
 		}
 	}
 	
+	/**
+	 * method to check logged in or not
+	 * @return
+	 */
 	public String checkLoggedIn() {
 		try {
 			return  UIActions.getText(RegistrationPageLocators.ele_loggedInUser, "Logged In User", 10);
@@ -140,10 +156,63 @@ public class Registration {
 		}
 	}
 	
-	public String logoutUser() {
+	/**
+	 * method to check the user is logged out or not
+	 * @return
+	 */
+	public String logoutUser(String input) {
 		try {
-			UIActions.clickElement(RegistrationPageLocators.ele_getAnchorLink("logout"), "Logout", 10);
+			UIActions.clickElement(RegistrationPageLocators.ele_getAnchorLink(input), "Logout", 10);
 			return driver.getTitle();
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * method to click on login
+	 * @param email
+	 * @param password
+	 */
+	public void clickOnLogin(String email, String password) {
+		try {
+			
+			UIActions.sendText(RegistrationPageLocators.ele_inputElement("login-email"), email, "Email", 10);
+			UIActions.sendText(RegistrationPageLocators.ele_inputElement("login-password"), password, "Email", 10);
+			UIActions.clickElement(RegistrationPageLocators.ele_button("login-button"), password, 10);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void clickOnLogin() {
+		try {
+			UIActions.sendText(RegistrationPageLocators.ele_inputElement("login-email"), email, "Email", 10);
+			UIActions.sendText(RegistrationPageLocators.ele_inputElement("login-password"), password, "Email", 10);
+			UIActions.clickElement(RegistrationPageLocators.ele_button("login-button"), password, 10);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * method to check incorrect login
+	 * @return
+	 */
+	public String checkIncorrectLogin() {
+		try {
+			return UIActions.getText(RegistrationPageLocators.ele_errorMessagecheck, "Error Message",10);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String checkDelete() {
+		try {
+			UIActions.clickElement(RegistrationPageLocators.ele_getAnchorLink("delete_account"), "SignUp/Login button",10);
+			return UIActions.getText(RegistrationPageLocators.ele_getTextFromHtmlEement("account-deleted"), "Account Created", 10);
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw e;
