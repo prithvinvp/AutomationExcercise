@@ -3,9 +3,9 @@ package com.Pages;
 import org.openqa.selenium.WebDriver;
 
 import com.Locators.RegistrationPageLocators;
-import com.Utils.actions.UIActions;
-import com.Utils.data.TestDataReader;
-import com.Utils.reports.Log;
+import com.Utils.Actions.UIActions;
+import com.Utils.Data.TestDataReader;
+import com.Utils.Reports.Log;
 
 public class Registration {
 	private WebDriver driver;

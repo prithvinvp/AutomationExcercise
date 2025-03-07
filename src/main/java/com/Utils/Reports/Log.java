@@ -1,8 +1,8 @@
-package com.Utils.reports;
+package com.Utils.Reports;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.Utils.configs.Core;
+import com.Utils.Configs.Core;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;

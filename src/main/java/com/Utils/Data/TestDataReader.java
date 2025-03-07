@@ -1,4 +1,4 @@
-package com.Utils.data;
+package com.Utils.Data;
 
 import java.util.Random;
 
