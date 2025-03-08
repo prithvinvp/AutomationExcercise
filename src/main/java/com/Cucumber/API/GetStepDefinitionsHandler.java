@@ -18,6 +18,14 @@ public class GetStepDefinitionsHandler {
 			throw e;
 		}
 	}
+
+	public String getBaseUrl() {
+		return baseUrl;
+	}
+
+	public void setBaseUrl(String baseUrl) {
+		this.baseUrl = baseUrl;
+	}
 	
 	
 }
