@@ -28,6 +28,14 @@ public class StepDefinitions {
     private static Map<String, String> params = new HashMap<>();
     private static RequestSpecification request = RestAssured.given();
 
+    public static  Map<String, String> getParams() {
+		return params;
+	}
+
+	@SuppressWarnings("static-access")
+	public void setParams(Map<String, String> params) {
+		this.params = params;
+	}
 
 	@Given("I get the {string}")
 	public static void iGetTheBaseUrl(String baseUrl) throws IOException {
@@ -59,6 +67,8 @@ public class StepDefinitions {
 				default: throw new IllegalArgumentException("Invalid HTTP method: " + method);
 				
 			}
+			
+			Log.message(response.asString());
 		}catch(Exception e) {
 			e.printStackTrace();
 			Log.message(e.getMessage());
@@ -68,7 +78,8 @@ public class StepDefinitions {
 	
 	@Then("I get the response as {int}")
 	public static void iGetTheResponseAs(int responseCode) {
-		Log.assertThat(Integer.toString(response.statusCode()), "200");
+		Log.message(Integer.toString(response.jsonPath().getInt("responseCode")));
+		Log.assertThat(Integer.toString(response.jsonPath().getInt("responseCode")), Integer.toString(responseCode));
 	}
 
 	public static RequestSpecification getHttpRequest() {
@@ -107,13 +118,5 @@ public class StepDefinitions {
 			throw e;
 		}
 
-	}
-
-	public static Map<String, String> getParams() {
-		return params;
-	}
-
-	public void setParams(Map<String, String> params) {
-		this.params = params;
 	}
 }

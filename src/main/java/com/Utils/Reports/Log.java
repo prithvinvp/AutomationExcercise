@@ -89,14 +89,17 @@ public class Log {
     public static void generateReport() {
         if (extent != null) {
             extent.flush();
+            Log.message("📄 Extent Report Generated: " + reportPath);
             logger.info("📄 Extent Report Generated: " + reportPath);
         }
     }
     
     public static void assertThat(String actual, String expected) {
         if (actual.toUpperCase().contains(expected.toUpperCase())) {
+        	Log.message("✅ Assertion Passed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
         	logger.info("✅ Assertion Passed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
         } else {
+        	Log.message(("❌ Assertion Failed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]"));
             logger.error("❌ Assertion Failed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
             throw new IllegalStateException("Assertion Failed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
         }

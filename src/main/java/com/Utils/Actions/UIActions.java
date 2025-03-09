@@ -37,7 +37,7 @@ public class UIActions {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			throw e;
 		}
 	}
 	
