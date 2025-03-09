@@ -1,11 +1,15 @@
 # Ignore target folder (compiled classes, JARs, etc.)
 target/
+Reports/
+test-output/
+test-output/*
 
 # Ignore Eclipse IDE files
 .classpath
 .project
 *.pref
 .settings/
+
 
 # Ignore Maven-specific files
 mvnw
