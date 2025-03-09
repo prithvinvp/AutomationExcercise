@@ -8,8 +8,8 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import com.Pages.Registration;
-import com.Utils.configs.Core;
-import com.Utils.reports.Log;
+import com.Utils.Configs.Core;
+import com.Utils.Reports.Log;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 

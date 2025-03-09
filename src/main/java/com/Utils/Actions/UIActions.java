@@ -1,4 +1,4 @@
-package com.Utils.actions;
+package com.Utils.Actions;
 
 import java.time.Duration;
 import java.util.NoSuchElementException;
@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 
-import com.Utils.reports.Log;
+import com.Utils.Reports.Log;
 
 public class UIActions {
 	
@@ -37,7 +37,7 @@ public class UIActions {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			throw e;
 		}
 	}
 	

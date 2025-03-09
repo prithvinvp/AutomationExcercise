@@ -1,4 +1,4 @@
-package com.Utils.configs;
+package com.Utils.Configs;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,7 +9,7 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.Utils.reports.Log;
+import com.Utils.Reports.Log;
 
 public class Core {
 	private static final Logger logger = LogManager.getLogger(Log.class);

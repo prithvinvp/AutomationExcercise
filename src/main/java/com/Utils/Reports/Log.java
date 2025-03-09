@@ -1,8 +1,8 @@
-package com.Utils.reports;
+package com.Utils.Reports;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.Utils.configs.Core;
+import com.Utils.Configs.Core;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
@@ -89,14 +89,17 @@ public class Log {
     public static void generateReport() {
         if (extent != null) {
             extent.flush();
+            Log.message("📄 Extent Report Generated: " + reportPath);
             logger.info("📄 Extent Report Generated: " + reportPath);
         }
     }
     
     public static void assertThat(String actual, String expected) {
         if (actual.toUpperCase().contains(expected.toUpperCase())) {
+        	Log.message("✅ Assertion Passed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
         	logger.info("✅ Assertion Passed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
         } else {
+        	Log.message(("❌ Assertion Failed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]"));
             logger.error("❌ Assertion Failed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
             throw new IllegalStateException("Assertion Failed - Expected: [" + expected.toUpperCase() + "], Actual: [" + actual.toUpperCase() + "]");
         }
